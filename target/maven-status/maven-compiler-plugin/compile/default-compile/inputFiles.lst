@@ -1,0 +1,11 @@
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/StoreApplication.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/entities/Address.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/entities/Category.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/entities/Product.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/entities/Profile.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/entities/User.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/repositories/AddressRepository.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/repositories/CategoryRepository.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/repositories/ProductRepository.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/repositories/ProfileRepository.java
+/Users/alisina/Desktop/Spring Boot/spring-api-starter/src/main/java/com/codewithmosh/store/repositories/UserRepository.java
