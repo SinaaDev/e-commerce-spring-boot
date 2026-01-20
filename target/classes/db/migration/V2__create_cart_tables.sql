@@ -15,5 +15,5 @@ CREATE TABLE cart_items (
     CONSTRAINT cart_items_card_id_fk
         FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE CASCADE,
     CONSTRAINT cart_items_product_id_fk
-        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
