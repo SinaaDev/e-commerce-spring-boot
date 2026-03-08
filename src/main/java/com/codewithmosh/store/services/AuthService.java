@@ -1,0 +1,23 @@
+package com.codewithmosh.store.services;
+
+import com.codewithmosh.store.entities.User;
+import com.codewithmosh.store.repositories.UserRepository;
+import io.jsonwebtoken.impl.security.EdwardsCurve;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+@RequiredArgsConstructor
+@Service
+public class AuthService {
+
+    private final UserRepository userRepository;
+
+    public User getUser(){
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var userId = (Long) authentication.getPrincipal();
+
+        return userRepository.findById(userId).orElse(null);
+    }
+
+}

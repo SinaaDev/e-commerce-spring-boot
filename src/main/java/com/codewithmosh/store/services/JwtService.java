@@ -1,43 +1,61 @@
 package com.codewithmosh.store.services;
 
+import com.codewithmosh.store.config.JwtConfig;
+import com.codewithmosh.store.entities.Role;
+import com.codewithmosh.store.entities.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
-    @Value("${spring.jwt.secret}")
-    private String secret;
+    private final JwtConfig jwtConfig;
 
-    public String generateJwtToken(String email) {
-        final long tokenExpiration = 86400;
-        return Jwts.builder()
-                .subject(email)
+    public Jwt generateAccessToken(User user) {
+        return generateToken(user, jwtConfig.getAccessTokenExpiration());
+    }
+
+    public Jwt generateRefreshToken(User user) {
+        return generateToken(user, jwtConfig.getRefreshTokenExpiration());
+    }
+
+    private Jwt generateToken(User user, long tokenExpiration) {
+
+        var claims = Jwts.claims()
+                .subject(String.valueOf(user.getId()))
+                .add("name", user.getName())
+                .add("email", user.getEmail())
+                .add("role", user.getRole())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
-                .compact();
+                .build();
 
+        return new Jwt(claims,jwtConfig.getSecretKey());
     }
 
-    public boolean validate(String token){
+    public Jwt parse(String token){
         try{
-            var claim = Jwts.parser()
-                    .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-            System.out.println(claim.getExpiration());
-            System.out.println(new Date());
-            System.out.println(claim.getExpiration().after(new Date()));
-            return claim.getExpiration().after(new Date());
-
-        }catch (JwtException e){
-            return false;
+            var claims = getClaims(token);
+            return new Jwt(claims,jwtConfig.getSecretKey());
+        } catch (JwtException e){
+            System.out.println(e.toString());
+            return null;
         }
     }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(jwtConfig.getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
 }
